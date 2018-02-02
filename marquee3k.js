@@ -15,7 +15,7 @@
   }
 }(this, function() {
   'use strict';
-
+  let animationId = 0;
   class Marquee3k {
     constructor(element, options) {
       this.element = element;
@@ -121,6 +121,7 @@
     }
 
     static init(options = { selector: 'marquee3k' }) {
+      window.cancelAnimationFrame(animationId);
       window.MARQUEES = [];
       const marquees = Array.from(document.querySelectorAll(`.${options.selector}`));
       let previousWidth = window.innerWidth;
@@ -138,7 +139,7 @@
         for (let i = 0; i < MARQUEES.length; i++) {
           MARQUEES[i].animate();
         }
-        window.requestAnimationFrame(animate);
+        animationId = window.requestAnimationFrame(animate);
       }
 
       window.addEventListener('resize', () => {
